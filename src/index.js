@@ -1,7 +1,9 @@
 const express = require("express");
 const { ApolloServer, gql } = require("apollo-server-express");
+const cors = require("cors");
 
 const app = express();
+app.use(cors());
 
 const schema = gql`
   # This Query type is the root of all graphql queries
