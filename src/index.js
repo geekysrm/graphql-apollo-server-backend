@@ -5,26 +5,41 @@ const cors = require("cors");
 const app = express();
 app.use(cors());
 
+let users = {
+  1: {
+    id: "1",
+    username: "geekysrm"
+  },
+  2: {
+    id: "2",
+    username: "rockstar123"
+  }
+};
+
+const me = users[1];
+
 const schema = gql`
   # This Query type is the root of all graphql queries
   # User is 'object type' whereas String, int, Boolean etc are 'scalar type'
   # me is a field having object type User
   type Query {
     me: User
+    user(id: ID!): User
   }
   # User has a username field
   # username is a field having scalar type i.e String
   type User {
+    id: ID!
     username: String!
   }
 `;
 const resolvers = {
   Query: {
     me: () => {
-      // returns data of type User according to line 11
-      return {
-        username: "geekysrm"
-      };
+      return me;
+    },
+    user: (parent, { id }) => {
+      return users[id];
     }
   }
 };
